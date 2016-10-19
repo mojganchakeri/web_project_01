@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%title></title>
+    <script src="../../public/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../public/css/bootstrp.min.css"/>
+</head>
+<body>
+<form action="/register/submit/" method ="post">
+    <fieldset><legend>Personal</legend>
+        <p>
+            <input  type="text" id="username" placeholder="Name" name="username"><span class="required">*</span>
+        </p>
+        <p>
+            <input type="password" id="password" placeholder="Password" name = "password"><span class="required">*</span>
+        </p>
+        <p>
+            <input type="password" id="repassword" placeholder="Confirm Password" name = "repassword"><span class="required">*</span>
+        </p>
+        <p>
+            <input type="text" id="email" placeholder="Email" name = "email"><span class="required">*</span>
+        </p>
+        <p>
+            <input type="text" id="number" placeholder="Contact No" name="number"><span class="required">*</span>
+        </p>
+    </fieldset>
+    <fieldset><legend>More Info</legend>
+        <textarea name="field6" class="textarea-field" placeholder="Enter Your More Information" id = "text"></textarea>
+        <div class="submit"><input type="submit" id="submit" value = "Sign Up"></div>
+    </fieldset>
+
+</form>
+<p id="message" ></p>
+<table id="table1" border="3" cellspacing="10">
+    <tr>
+        <td> Name </td>
+        <td> Contact No.</td>
+        <td> Email</td>
+        <td> Message</td>
+    </tr>
+    <tbody id="tbody">
+
+    </tbody>
+</table>
+<script>
+    $(function(){
+       $.ajax({
+
+       })
+    });
+</script>
+</body>
+</html>
