@@ -17,3 +17,5 @@ router.get('/change' , function(req , res , next){
 router.post('/change' , function(req , res , next){
 	res.render('admin/change' , {page_title : 'Change Accessibility'});
 });
+
+module.exports = router;
