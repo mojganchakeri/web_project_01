@@ -1,33 +1,28 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
-    <script src="../../public/js/jquery.min.js"></script>
-    <link href="../../public/css/bootstrap.min.css"  rel="stylesheet"/>
-</head>
-<body>
- <div class="container">
-
-      <form class="form-signin">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" value="remember-me"> Remember me
-          </label>
-          <label>
-            <input type="" value="remember-me"> Remember me
-          </label>
+<%- include ../master/header %>
+  <div class="container direction_rtl">
+    <div class="row" style="margin-top:50px;">
+      <div class="col-sm-4 col-sm-offset-4">
+      <h3 class="samim">ورود به سیستم</h3>
+        <div class="panel panel-primary samim">
+          <div class="panel-heading text-right samim">ورود به سامانه</div>
+          <div class="panel-body">
+            <form action="/login" method="post">
+              <div class="form-group samim">
+                <label for="email">ایمیل</label>
+                <input type="email" name="email" id="email" class="form-control">
+              </div>
+              <div class="form-group samim">
+                <label for="password">رمز عبور</label>
+                <input type="password" name="password" id="password" class="form-control">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-block btn-primary">ورود</button>
+                <a href="/register" class="btn btn-block btn-danger">ثبت نام</a>
+              </div>
+            </form>
+          </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
-
+      </div>
     </div>
-</body>
-</html>
+  </div>
+<%- include ../master/footer %>
