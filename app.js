@@ -26,12 +26,10 @@ app.use(express.static(path.join(__dirname, 'public')));
   |         Routes Section
   |---------------------------------
 */
-var routeIndex = require('./routes/index');
-var routePanel = require('./routes/panel');
-var routeAdmin = require('./routes/admin');
-app.use('/', routeIndex);
-app.use('/panel',routePanel);
-app.use('/admin',routeAdmin);
+
+app.use('/', require('./routes/index'));
+app.use('/panel',require('./routes/panel'));
+app.use('/admin',require('./routes/admin'));
 
 
 
