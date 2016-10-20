@@ -39,30 +39,40 @@ var controller = {
 		if(password !== confirmPassword){
 			errors.push({msg:'رمز های عبور با هم منطبق نمی باشند'});
 		}
+		user.findOne({email:email},function(err,user){
+			if(err){
+				return null;
+			}
+			if(user){
+				errors.push({msg:'کاربری با این ایمیل از قبل موجود است'});
+				res.render('auth/register',{page_title :'Register',errors : errors});
+				return null;
+			}else{
+				if(errors.length == 0){
+				//Hashing Password
+					var hash = crypt.createHmac('sha512',config.mySecretKey);
+					hash.update(password);
+					password = hash.digest('hex');
 
-		if(errors.length == 0){
-			//Hashing Password
-			var hash = crypt.createHmac('sha512',config.mySecretKey);
-			hash.update(password);
-			password = hash.digest('hex');
-
-			var data = new user({
-				email : email,
-				password : password,
-				fullname : fullname,
-				position : 'IRAN',
-				reg_date : new Date(),
-				lastlogin_data : new Date(),
-				is_network_admin : false,
-				is_email_confirm : false,
-				confirm_key_value : helper.generate_string(32),
-				access_aproved : false
-			});
-			data.save();
-			res.redirect('/login?register=ok');
-		}else{
-			res.render('auth/register',{page_title :'Register',errors : errors});
-		}
+					var data = new user({
+						email : email,
+						password : password,
+						fullname : fullname,
+						position : 'IRAN',
+						reg_date : new Date(),
+						lastlogin_data : new Date(),
+						is_network_admin : false,
+						is_email_confirm : false,
+						confirm_key_value : helper.generate_string(32),
+						access_aproved : false
+					});
+					data.save();
+					res.redirect('/login?register=ok');
+				}else{
+					res.render('auth/register',{page_title :'Register',errors : errors});
+				}
+			}
+		});
 	},
 };
 
