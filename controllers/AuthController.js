@@ -7,12 +7,18 @@ var passport = require('../config/authenticate');
 
 var controller = {
 	getLogin : function(req,res,next){
+		if(req.user){
+			res.redirect('/panel');
+		}
 		register_redirect = req.query.register == 'ok' ? true : false;
 		var errors = req.flash('errors');
 		res.render('auth/login',{page_title : 'Login',errors:errors,register : register_redirect});
 	},
 	postLogin : passport.authenticate('login' , {successRedirect : '/panel',failureRedirect : '/login' }),
 	getRegister : function(req,res,next){
+		if(req.user){
+			res.redirect('/panel');
+		}
 		res.render('auth/register',{page_title : 'Register'});
 	},
 	postRegister : function(req,res,next){
@@ -85,6 +91,9 @@ var controller = {
 		});
 	},
 	getConfirm : function(req,res,next){
+		if(req.user){
+			res.redirect('/panel');
+		}
 		email = decodeURIComponent(req.params.email);
 		console.log(email);
 		code = req.params.code;
