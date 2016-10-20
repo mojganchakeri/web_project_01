@@ -8,7 +8,6 @@ router.get('/info',AdminController.getInfo);
 
 //TODO add user id param for showing data
 router.get('/change' , AdminController.getChange);
-
 router.post('/change' , AdminController.postChange);
 
 module.exports = router;

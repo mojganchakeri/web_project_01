@@ -1,3 +1,4 @@
+var User = require('../models/user');
 var controller = {
 	getIndex : function(req,res,next){
 		if(req.user == undefined){
@@ -20,14 +21,22 @@ var controller = {
 		res.render('admin/info' , {page_title : 'Admin Info'});
 	},
 	getChange : function(req,res,next){
-		if(req.user == undefined){
+		/*if(req.user == undefined){
 			res.redirect('/login');
 		}
 		if(req.user.is_network_admin == false){
 			req.flash('errors',{msg:'سطح دسترسی شما کافی نمی باشد'});
 			res.redirect('/panel');
-		}
-		res.render('admin/change' , {page_title :'Change Accessibility'});
+		}*/
+		var users = [];
+		var u = User.find(function(err,user){
+			if(err){
+				console.log(err);
+			}
+			return user;
+		});
+		
+		res.render('admin/change' , {page_title :'Change Accessibility',users : users});
 	},
 	postChange :function(req,res,next){
 		if(req.user == undefined){
