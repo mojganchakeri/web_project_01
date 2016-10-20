@@ -1,5 +1,5 @@
 var crypt = require('crypto');
-var config = require('config');
+var config = require('./config');
 
 var helper = {
 	generate_string : function(length){
@@ -10,7 +10,7 @@ var helper = {
 	  }
 	  return new_str;
 	},
-	check_assword : function(password,hashedPassword){
+	check_password : function(password,hashedPassword){
 			var hash = crypt.createHmac('sha512',config.mySecretKey);
 			hash.update(password);
 			password = hash.digest('hex');

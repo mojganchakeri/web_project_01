@@ -1,11 +1,25 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var db = require('./mongo');
+var User = require('../models/user');
 var helper = require('./helper');
 
-passport.use(new LocalStrategy(
+//passport configure for serialize and deserialize
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+ 
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+passport.use('login',new LocalStrategy({
+	    usernameField: 'email',
+	    passwordField: 'password'
+  	},
 	function(username,password,done){
-		db.collection('users').findOne({username:username},function(err,user){
+		User.findOne({email:username},function(err,user){
 			if(err){return done(err);}
 			if(!user){
 				return done(null,false,{message:'این نام کاربری موجود نیست'});

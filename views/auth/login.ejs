@@ -6,6 +6,12 @@
         <div class="panel panel-primary samim">
           <div class="panel-heading text-right samim">ورود به سامانه</div>
           <div class="panel-body">
+            <% if(register) {%>
+              <div class="alert alert-info">
+                <strong>ایول</strong>
+                <p>ثبت نام شما با موفقیت انجام شد. جهت تکمیل ثبت نام ایمیل خود را بررسی نمایید</p>
+              </div>
+            <%}%>
             <form action="/login" method="post">
               <div class="form-group samim">
                 <label for="email">ایمیل</label>

@@ -3,16 +3,14 @@ var crypt = require('crypto');
 var user = require('../models/user');
 var config = require('../config/config');
 var helper = require('../config/helper');
-
-
+var passport = require('../config/authenticate');
 
 var controller = {
 	getLogin : function(req,res,next){
-		res.render('auth/login',{page_title : 'Login'});
+		register_redirect = req.query.register == 'ok' ? true : false;
+		res.render('auth/login',{page_title : 'Login',register : register_redirect});
 	},
-	postLogin : function(req,res,next){
-		res.render('auth/login',{page_title:'Login'});
-	},
+	postLogin : passport.authenticate('login' , {successRedirect : '/panel',failureRedirect : '/login' }),
 
 	getRegister : function(req,res,next){
 		res.render('auth/register',{page_title : 'Register'});
@@ -61,7 +59,7 @@ var controller = {
 				access_aproved : false
 			});
 			data.save();
-			res.send('sign up is completed');
+			res.redirect('/login?register=ok');
 		}else{
 			res.render('auth/register',{page_title :'Register',errors : errors});
 		}
