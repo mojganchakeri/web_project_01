@@ -1,15 +1,11 @@
 var express = require('express');
 var router =  express.Router();
+var PanelController = require('../controllers/PanelController');
 
-
-router.get('/',function(req ,res , next){
-	res.render('panel/index' , {page_title: 'Panel Page'});
-});
+router.get('/',PanelController.getIndex);
 
 //TODO add user id param for finding show whose info
-router.get('/info' ,function(req , res , next){
-	res.render('panel/info' , {page_title: 'User Info Page'});
-});
+router.get('/info/:email' ,PanelController.getInfo);
 
 
 module.exports = router;

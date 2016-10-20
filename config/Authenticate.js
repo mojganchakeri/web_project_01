@@ -28,7 +28,7 @@ passport.use('login',new LocalStrategy({
 			if(!helper.check_password(password,user.password)){
 				return done(null,false,req.flash('errors', {msg:'رمز عبور وارد شده اشتباه می باشد'}));
 			}
-			if(user.is_confirm_email == false){
+			if(user.is_email_confirm == false){
 				return done(null,false,req.flash('errors', {msg:'پس از تایید ایمیل قادر به ورود خواهید بود'}));
 			}
 			return done(null,user);

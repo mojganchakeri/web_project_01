@@ -9,6 +9,16 @@
 			<div class="panel panel-primary samim direction_url text-right">
 				<div class="panel-heading">پیام های سیستم</div>
 				<div class="panel-body">
+					<% if(typeof errors != 'undefined' && errors.length > 0){ %>
+					<div class="alert alert-danger direction_rtl">
+ 						<strong>اووپس...!!! ایرادات زیر وجود دارد</strong>
+                        <ul>
+                          <% for (i=0;i<errors.length;i++) { %>
+                            <li><%= errors[i].msg %></li>
+                          <% } %>
+                        </ul>
+                        </div>
+					<% } %>
 					<div class="alert alert-success">
 						<strong>خوش آمدید</strong><br>
 						<p>به سامانه خوش امدید از منوی سمت راست می توانید فرایند مورد نظرتان را انتخاب کنید</p>

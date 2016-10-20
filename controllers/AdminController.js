@@ -1,6 +1,6 @@
 var controller = {
 	getIndex : function(req,res,next){
-		if(req.user){
+		if(req.user == undefined){
 			res.redirect('/login');
 		}
 		if(req.user.is_network_admin == false){
@@ -10,7 +10,7 @@ var controller = {
 		res.render('admin/index' , {page_title : 'Admin Page'});
 	},
 	getInfo : function(req,res,next){
-		if(req.user){
+		if(req.user == undefined){
 			res.redirect('/login');
 		}
 		if(req.user.is_network_admin == false){
@@ -20,7 +20,7 @@ var controller = {
 		res.render('admin/info' , {page_title : 'Admin Info'});
 	},
 	getChange : function(req,res,next){
-		if(req.user){
+		if(req.user == undefined){
 			res.redirect('/login');
 		}
 		if(req.user.is_network_admin == false){
@@ -30,7 +30,7 @@ var controller = {
 		res.render('admin/change' , {page_title :'Change Accessibility'});
 	},
 	postChange :function(req,res,next){
-		if(req.user){
+		if(req.user == undefined){
 			res.send('error');
 		}
 		if(req.user.is_network_admin == false){
