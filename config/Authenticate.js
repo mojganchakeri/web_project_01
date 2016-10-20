@@ -16,16 +16,20 @@ passport.deserializeUser(function(id, done) {
 
 passport.use('login',new LocalStrategy({
 	    usernameField: 'email',
-	    passwordField: 'password'
+	    passwordField: 'password',
+	    passReqToCallback: true
   	},
-	function(username,password,done){
+	function(req,username,password,done){
 		User.findOne({email:username},function(err,user){
 			if(err){return done(err);}
 			if(!user){
-				return done(null,false,{message:'این نام کاربری موجود نیست'});
+				return done(null,false,req.flash('errors', {msg:'کاربری با مشخصات ورودی یافت نگردید'}));
 			}
 			if(!helper.check_password(password,user.password)){
-				return done(null,false,{message:'رمز عبور صحیحی نمی باشد'});
+				return done(null,false,req.flash('errors', {msg:'رمز عبور وارد شده اشتباه می باشد'}));
+			}
+			if(user.is_confirm_email == false){
+				return done(null,false,req.flash('errors', {msg:'پس از تایید ایمیل قادر به ورود خواهید بود'}));
 			}
 			return done(null,user);
 		});

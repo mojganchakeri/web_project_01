@@ -12,6 +12,22 @@
                 <p>ثبت نام شما با موفقیت انجام شد. جهت تکمیل ثبت نام ایمیل خود را بررسی نمایید</p>
               </div>
             <%}%>
+            <% if (typeof errors != 'undefined' && errors.length > 0) {%>
+              <div class="alert alert-danger direction_rtl text-right samim">
+                <strong>خطا ... !</strong>
+                <ul>
+                  <% for (i=0;i<errors.length;i++) { %>
+                    <li><%= errors[i].msg %></li>
+                  <% } %>
+                </ul>
+              </div>
+            <% } %>
+            <% if(typeof confirmed != 'undefined' && confirmed == true) {%>
+              <div class="alert alert-success">
+                <strong>ایول</strong>
+                <p>ایمیل شما با موفقیت تایید شد. هم اکنون می توانید وارد شودی</p>
+              </div>
+            <%}%>
             <form action="/login" method="post">
               <div class="form-group samim">
                 <label for="email">ایمیل</label>

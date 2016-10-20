@@ -8,10 +8,10 @@ var passport = require('../config/authenticate');
 var controller = {
 	getLogin : function(req,res,next){
 		register_redirect = req.query.register == 'ok' ? true : false;
-		res.render('auth/login',{page_title : 'Login',register : register_redirect});
+		var errors = req.flash('errors');
+		res.render('auth/login',{page_title : 'Login',errors:errors,register : register_redirect});
 	},
 	postLogin : passport.authenticate('login' , {successRedirect : '/panel',failureRedirect : '/login' }),
-
 	getRegister : function(req,res,next){
 		res.render('auth/register',{page_title : 'Register'});
 	},
@@ -75,7 +75,8 @@ var controller = {
 						data.save();
 						res.redirect('/login?register=ok');
 					}else{
-						errors.push({msg : 'خطایی در ارسال ایمیل ئیش امد مجددا تلاش کنید'})
+						errors.push({msg : 'خطایی در ارسال ایمیل ئیش امد مجددا تلاش کنید'});
+						res.render('auth/register',{page_title :'Register',errors : errors});
 					}
 				}else{
 					res.render('auth/register',{page_title :'Register',errors : errors});
@@ -83,6 +84,42 @@ var controller = {
 			}
 		});
 	},
+	getConfirm : function(req,res,next){
+		email = decodeURIComponent(req.params.email);
+		console.log(email);
+		code = req.params.code;
+		errors = new Array();
+		user.findOne({email:email},function(err,usr){
+			if(err){
+				errors.push({msg:'خطایی در یافتن کاربر رخ داد. مجدد تلاش کنید'});
+				res.render('auth/login',{page_title : 'Login',register : false,errors: errors});
+				return false;
+			}
+			if(!usr){
+				errors.push({msg:'لینک وارد شده با توجه به ایمیل معتبر نمی باشد'});
+				res.render('auth/login',{page_title : 'Login',register : false,errors: errors});
+				return false;
+			}
+			console.log(code);
+			if(usr.confirm_key_value != code){
+				errors.push({msg:'لینک وارد شده معتبر نمی باشد'});
+				res.render('auth/login',{page_title : 'Login',register : false,errors: errors});
+				return false;
+			}else{
+				user.update({email : email},{is_email_confirm : true,confirm_key_value : "null"},{multi:false},function(err,AffectedRows){
+					if(!err){
+						console.log(AffectedRows);
+						res.render('auth/login',{page_title : 'Login',register : false,confirmed:true});
+						return false;
+					}else{
+						errors.push({msg:'خطایی در به روز رسانی اطلاعات به وجود آمد. مجدد تلاش کنید'})
+						res.render('auth/login',{page_title : 'Login',register : false,errors: errors});
+						return false;
+					}
+				})
+			}
+		})
+	}
 };
 
 

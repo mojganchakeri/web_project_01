@@ -12,5 +12,6 @@ router.get('/register',AuthController.getRegister);
 router.post('/login',AuthController.postLogin);
 router.post('/register',AuthController.postRegister);
 
+router.get('/confirm/e/:email/c/:code',AuthController.getConfirm);
 
 module.exports = router;
