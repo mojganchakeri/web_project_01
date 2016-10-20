@@ -3,6 +3,9 @@ var crypt = require('crypto');
 var user = require('../models/user');
 var config = require('../config/config');
 var helper = require('../config/helper');
+
+
+
 var controller = {
 	getLogin : function(req,res,next){
 		res.render('auth/login',{page_title : 'Login'});
