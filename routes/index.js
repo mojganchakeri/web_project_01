@@ -1,32 +1,16 @@
 var express = require('express');
 var router = express.Router();
-
+var AuthController = require('../controllers/AuthController');
+var MainController = require('../controllers/MainController');
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { page_title: 'Express' });
-});
-
-/* Get Login Page */
-router.get('/login',function(req,res,next){
-	res.render('auth/login',{page_title : 'Login'});
-});
-
-/* Get Register Page */
-router.get('/register',function(req,res,next){
-	res.render('auth/register',{page_title : 'Register'});
-});
+router.get('/', MainController.getIndex);
 
 
+router.get('/login',AuthController.getLogin);
+router.get('/register',AuthController.getRegister);
 
-router.post('/login',function(req,res,next){
-	//TODO complete login post page
-	res.render('auth/login',{page_title:'Login'});
-});
-
-router.post('/register',function(req,res,next){
-	//TODO complete register post page
-	res.render('auth/register',{page_title :'Register'});
-});
+router.post('/login',AuthController.postLogin);
+router.post('/register',AuthController.postRegister);
 
 
 module.exports = router;
