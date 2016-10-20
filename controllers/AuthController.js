@@ -39,6 +39,26 @@ var controller = {
 		if(password !== confirmPassword){
 			errors.push({msg:'رمز های عبور با هم منطبق نمی باشند'});
 		}
+
+		//create user data and intialize for save
+		var hash = crypt.createHmac('sha512',config.mySecretKey);
+		hash.update(password);
+		password = hash.digest('hex');
+		var random_str = helper.generate_string(32);
+		var data = new user({
+			email : email,
+			password : password,
+			fullname : fullname,
+			position : 'IRAN',
+			reg_date : new Date(),
+			lastlogin_data : new Date(),
+			is_network_admin : false,
+			is_email_confirm : false,
+			confirm_key_value : random_str,
+			access_aproved : false
+		});
+
+
 		user.findOne({email:email},function(err,user){
 			if(err){
 				return null;
@@ -50,25 +70,13 @@ var controller = {
 			}else{
 				if(errors.length == 0){
 				//Hashing Password
-					var hash = crypt.createHmac('sha512',config.mySecretKey);
-					hash.update(password);
-					password = hash.digest('hex');
-
-					var data = new user({
-						email : email,
-						password : password,
-						fullname : fullname,
-						position : 'IRAN',
-						reg_date : new Date(),
-						lastlogin_data : new Date(),
-						is_network_admin : false,
-						is_email_confirm : false,
-						confirm_key_value : helper.generate_string(32),
-						access_aproved : false
-					});
-					data.save();
-					//TODO emaill to use
-					res.redirect('/login?register=ok');
+					
+					if(helper.send_confirm_email(email,random_str)){
+						data.save();
+						res.redirect('/login?register=ok');
+					}else{
+						errors.push({msg : 'خطایی در ارسال ایمیل ئیش امد مجددا تلاش کنید'})
+					}
 				}else{
 					res.render('auth/register',{page_title :'Register',errors : errors});
 				}

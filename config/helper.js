@@ -29,22 +29,22 @@ var helper = {
 	        }
 	    });
 		var link = 'http://localhost:3000/confirm/e/'+encodeURIComponent(email)+'/c/'+str
-		var text = '<h3>Confirm your email</h3><br><p>Please Click On Bottom Link</p><br><a href="'+link+'" target="_blank">'+link+'</a>'
+		var text = "<h3>Confirm your email</h3><br><p>Please Click On Bottom Link</p><br><a href=\""+link+"\" target=\"_blank\">"+link+"</a>";
 		var mailOptions = {
 		    from: '<hw0java0iut0course0950email>', // sender address
 		    to: email, // list of receivers
 		    subject: 'Confirm Your Email', // Subject line
-		    text: text //, // plaintext body
+		    text: text, //, // plaintext body
+		    html : text
 		};
-		var successfully_send = false;
 		transporter.sendMail(mailOptions, function(error, info){
 		    if(error){
-		        successfully_send = false;
+		    	console.log('error');
 		    }else{
-		        successfully_send = true;
+		        console.log('success');
 		    };
 		});
-		return successfully_send;
+		return true;
 	}
 };
 
