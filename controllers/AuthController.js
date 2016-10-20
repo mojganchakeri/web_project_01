@@ -67,6 +67,7 @@ var controller = {
 						access_aproved : false
 					});
 					data.save();
+					//TODO emaill to use
 					res.redirect('/login?register=ok');
 				}else{
 					res.render('auth/register',{page_title :'Register',errors : errors});

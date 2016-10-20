@@ -1,5 +1,6 @@
 var crypt = require('crypto');
 var config = require('./config');
+var nodemailer = require('nodemailer');
 
 var helper = {
 	generate_string : function(length){
@@ -18,6 +19,32 @@ var helper = {
 				return true;
 			}
 			return false;
+	},
+	send_confirm_email : function(email,str){
+		var transporter = nodemailer.createTransport({
+	        service: 'Gmail',
+	        auth: {
+	            user: 'hw0java0iut0course0950email', // Your email id
+	            pass: '1234567890*' // Your password
+	        }
+	    });
+		var link = 'http://localhost:3000/confirm/e/'+encodeURIComponent(email)+'/c/'+str
+		var text = '<h3>Confirm your email</h3><br><p>Please Click On Bottom Link</p><br><a href="'+link+'" target="_blank">'+link+'</a>'
+		var mailOptions = {
+		    from: '<hw0java0iut0course0950email>', // sender address
+		    to: email, // list of receivers
+		    subject: 'Confirm Your Email', // Subject line
+		    text: text //, // plaintext body
+		};
+		var successfully_send = false;
+		transporter.sendMail(mailOptions, function(error, info){
+		    if(error){
+		        successfully_send = false;
+		    }else{
+		        successfully_send = true;
+		    };
+		});
+		return successfully_send;
 	}
 };
 
